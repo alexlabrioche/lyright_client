@@ -1,11 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'emotion-theming';
-import theme from '@rebass/preset';
+import rebassTheme from '@rebass/preset';
+import { extend } from './extend';
 
-import { colors } from './extendTheme';
-
-const mainTheme = { ...theme, ...colors };
+const theme = { ...rebassTheme, ...extend };
 
 export default ({ children }) => (
-  <ThemeProvider theme={mainTheme}>{children}</ThemeProvider>
+  <ThemeProvider theme={theme}>{children}</ThemeProvider>
 );

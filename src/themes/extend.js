@@ -1,0 +1,50 @@
+export const extend = {
+  breakpoints: ['40em', '58em', '72em'],
+  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],
+  space: [0, 4, 8, 16, 32, 64, 128, 256],
+  colors: {
+    primaryLighter: '#D2EAFD',
+    primaryLight: '#80C4FF',
+    primary: '#1897FF',
+    primaryDark: '#137ACF',
+    primaryDarker: '#0360AF',
+    accent: '#6BFFB4',
+    secondary: '#E65375',
+    background: '#EEEEEE',
+    shade: '#f6f6f6',
+    shade2: '#dddddd',
+    baseFont: '#313131',
+  },
+  fonts: {
+    heading: 'Space Mono, system-ui, sans-serif',
+    body: 'Montserrat, system-ui, sans-serif',
+  },
+  variants: {
+    app: {
+      bg: 'primaryDarker',
+      height: '100vh',
+      fontFamily: 'body',
+      color: 'white',
+      flexDirection: 'column',
+      fontSize: [1, 2, 2, 2],
+    },
+    appContainer: {
+      px: [3, 4, 5, 6],
+      py: 5,
+      flexDirection: 'column',
+      flexGrow: 1,
+    },
+    nav: {
+      px: [1, 3],
+      py: 2,
+      alignItems: 'center',
+      bg: 'primaryDarker',
+    },
+    footer: {
+      px: [1, 3],
+      py: 2,
+      alignItems: 'center',
+      alignSelf: 'end',
+    },
+  },
+};

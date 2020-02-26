@@ -1,12 +1,6 @@
 import { combineReducers } from 'redux';
+import api from './api';
 
 export default combineReducers({
-  // article,
-  // articleList,
-  // auth,
-  // common,
-  // editor,
-  // home,
-  // profile,
-  // settings,
+  api,
 });

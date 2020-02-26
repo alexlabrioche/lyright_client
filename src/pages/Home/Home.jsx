@@ -1,13 +1,12 @@
 import React from 'react';
 import { Heading } from 'rebass';
+import AppLayout from '../../layouts/AppLayout';
 
 function Home() {
   return (
-    <div>
-      <Heading fontSize={[5, 6, 7, 8]} color="primary">
-        Hello from home
-      </Heading>
-    </div>
+    <AppLayout title={'Accueil'}>
+      <Heading>Hello from home</Heading>
+    </AppLayout>
   );
 }
 
