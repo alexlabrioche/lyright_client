@@ -13,6 +13,13 @@ function AppLink({ to = '/', children = '', ...props }) {
   );
 }
 
-AppLink.propTypes = {};
+AppLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.element.isRequired,
+  ]),
+  props: PropTypes.any,
+};
 
 export default AppLink;

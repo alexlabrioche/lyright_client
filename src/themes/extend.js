@@ -2,6 +2,12 @@ export const extend = {
   breakpoints: ['40em', '58em', '72em'],
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],
   space: [0, 4, 8, 16, 32, 64, 128, 256],
+  fontWeights: {
+    body: 400,
+    heading: 400,
+    medium: 500,
+    bold: 700,
+  },
   colors: {
     primaryLighter: '#D2EAFD',
     primaryLight: '#80C4FF',
@@ -9,11 +15,12 @@ export const extend = {
     primaryDark: '#137ACF',
     primaryDarker: '#0360AF',
     accent: '#6BFFB4',
-    secondary: '#E65375',
+    secondary: '#ed71d0',
     background: '#EEEEEE',
     shade: '#f6f6f6',
     shade2: '#dddddd',
     baseFont: '#313131',
+    error: '#E65375',
   },
   fonts: {
     heading: 'Space Mono, system-ui, sans-serif',
@@ -22,7 +29,7 @@ export const extend = {
   variants: {
     app: {
       bg: 'primaryDarker',
-      height: '100vh',
+      minHeight: '100vh',
       fontFamily: 'body',
       color: 'white',
       flexDirection: 'column',
