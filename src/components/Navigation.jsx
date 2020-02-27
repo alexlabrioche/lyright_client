@@ -11,12 +11,17 @@ function Navigation() {
         <Link to="/">Lyright</Link>
       </Heading>
       <Box mx="auto" />
-      <Link to="/artistes" mr={2}>
+      {!isMobile ? (
+        <Link to="/jouer" mr={[3, 4]}>
+          Jouer
+        </Link>
+      ) : null}
+      <Link to="/artistes" mr={[3, 4]}>
         Artistes
       </Link>
 
       {!isMobile ? (
-        <Button variant="secondary" mx={2}>
+        <Button variant="secondary" mx={[3, 4]}>
           <Link to="/connexion">Se connecter</Link>
         </Button>
       ) : null}

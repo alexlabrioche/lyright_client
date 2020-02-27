@@ -1,56 +1,26 @@
 import {
-  REQUEST_STARTED,
-  REQUEST_FAIL,
   REQUEST_SUCCESS_NEW_GAME,
-  REQUEST_SUCCESS_ARTISTS,
-  REQUEST_SUCCESS_ARTIST_DETAILS,
-  REQUEST_SUCCESS_SONGS,
+  REQUEST_SUCCESS_PSEUDO,
 } from '../actions/types';
 
 const initialState = {
-  loading: false,
-  error: null,
-  artists: [],
-  artistDetails: {},
-  songsFromArtist: [],
+  connected: {},
+  guest: {},
+  code: null,
 };
 
-export default function apiRequest(state = initialState, { type, payload }) {
-  console.log('☘️', type);
+export default function(state = initialState, { type, payload }) {
   switch (type) {
-    case REQUEST_STARTED:
+    case REQUEST_SUCCESS_NEW_GAME:
       return {
         ...state,
-        loading: true,
+        code: payload.data,
       };
-    case REQUEST_FAIL:
+    case REQUEST_SUCCESS_PSEUDO:
       return {
         ...state,
-        loading: false,
-        error: payload.error,
+        guest: { ...state.guest, pseudo: payload.data },
       };
-    case REQUEST_SUCCESS_ARTISTS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        artists: payload.data,
-      };
-    case REQUEST_SUCCESS_ARTIST_DETAILS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        artistDetails: payload.data,
-      };
-    case REQUEST_SUCCESS_SONGS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        songsFromArtist: payload.data,
-      };
-
     default:
       return state;
   }

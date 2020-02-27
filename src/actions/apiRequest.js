@@ -11,7 +11,7 @@ const requestFail = error => ({
   payload: error,
 });
 
-const requestSuccess = (data, subType) => ({
+const dispatchRequestSuccess = (data, subType) => ({
   type: `${REQUEST_SUCCESS}_${subType}`,
   payload: data,
 });
@@ -24,7 +24,7 @@ export const apiRequest = (subType = '', uri = '') => {
     axios
       .get(`${baseUrl}${uri}`)
       .then(({ data }) => {
-        dispatch(requestSuccess(data, subType));
+        dispatch(dispatchRequestSuccess(data, subType));
       })
       .catch(err => {
         dispatch(requestFail(err.message));
