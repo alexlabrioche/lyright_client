@@ -4,6 +4,7 @@ const initialState = {
   host: '',
   code: '',
   artists: [],
+  score: {},
   round: 0,
 };
 

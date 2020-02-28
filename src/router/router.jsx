@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import useMobile from '../hooks/useMobileDevice';
 
@@ -33,38 +28,21 @@ function DesktopRoute({ children, ...rest }) {
     />
   );
 }
-
-function PrivateRoute({ children, ...rest }) {
-  const { isAuth } = useSelector(({ user }) => user);
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        isAuth ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/connexion',
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
+function authMiddleware(Component, authenticated) {
+  return authenticated ? <Component /> : <Redirect to={'/'} />;
 }
 
 export default function AppRouter() {
+  const { isAuth } = useSelector(({ user }) => user);
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
         <Route path="/artistes">
           <ArtistsPage />
         </Route>
-        <PrivateRoute path="/jouer">
-          <GamePage />
-        </PrivateRoute>
+        <DesktopRoute path="/jouer">
+          {authMiddleware(GamePage, isAuth)}
+        </DesktopRoute>
         <DesktopRoute path="/connexion">
           <AuthPage />
         </DesktopRoute>
@@ -72,6 +50,6 @@ export default function AppRouter() {
           <HomePage />
         </Route>
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 }

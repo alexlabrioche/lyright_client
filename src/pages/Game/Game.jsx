@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Button, Flex } from 'rebass';
+import React, { useEffect } from 'react';
+import { Button, Flex } from 'rebass';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { apiRequest } from '../../actions/apiRequest';
@@ -15,7 +15,6 @@ function Game() {
   const { artistsList } = useSelector(({ artists }) => artists);
   const game = useSelector(({ game }) => game);
   const user = useSelector(({ user }) => user);
-  console.log('game.artists', game);
 
   function initNewGame() {
     dispatch(addHost(user.id));
@@ -23,8 +22,7 @@ function Game() {
     dispatch(apiRequest(NEW_GAME, '/game/code'));
   }
 
-  React.useEffect(() => {
-    console.log('user.code', user.code);
+  useEffect(() => {
     if (user.code) {
       dispatch(addSecretCode(user.code));
     }

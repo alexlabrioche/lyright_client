@@ -20,13 +20,13 @@ export default function GameSettings({ code, onClick, artists = [] }) {
           {code}
         </Heading>
         <Text sx={{ textAlign: 'center', fontSize: 3, mt: 3 }}>
-          Ramènes tes copains et connectez vous grâce à ce code !
+          Ramène tes copains et connectez vous sur vos smartphone !
         </Text>
       </Box>
       <Flex width={1} my={4}>
         <SelectArtist onClick={onClick} artists={artists} width="50%" mx={3} />
         <SelectArtist onClick={onClick} artists={artists} width="50%" mx={3} />
-        {artists.length === 2 && 'READY TO STUPIDITYZ'}
+        {artists.length === 2 && 'READY 4 STUPIDITY'}
       </Flex>
     </>
   );

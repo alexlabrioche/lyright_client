@@ -10,6 +10,7 @@ export default function(state = initialState, { type, payload }) {
     case REQUEST_STARTED:
       return {
         ...state,
+        error: null,
         loading: true,
       };
     case REQUEST_FAIL:
