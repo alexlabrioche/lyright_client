@@ -16,7 +16,7 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         loading: false,
-        error: payload.error,
+        error: payload,
       };
     default:
       return state;

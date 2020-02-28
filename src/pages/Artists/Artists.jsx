@@ -7,8 +7,9 @@ import {
   SONGS,
   SONG_DETAILS,
 } from '../../actions/types';
+import { Flex } from 'rebass';
 import AppLayout from '../../layouts/AppLayout';
-import SelectArtist from './components/SelectArtist';
+import SelectArtist from '../../components/SelectArtist';
 import ArtistDetails from './components/ArtistDetails';
 import SongsList from './components/SongsList';
 import SongDetails from './components/SongDetails';
@@ -32,7 +33,7 @@ function Artists() {
     id && dispatch(apiRequest(SONGS, `/artists/${id}/songs`));
   }, [artistDetails]);
 
-  function selectArtistFromList({ id }) {
+  function selectArtistFromList(id) {
     id && dispatch(apiRequest(ARTIST_DETAILS, `/artists/${id}`));
   }
 
@@ -42,11 +43,19 @@ function Artists() {
 
   return (
     <AppLayout title={artistDetails.name || 'Artistes'}>
-      <SelectArtist
-        artists={artistsList}
-        onClick={selectArtistFromList}
-        artistName={artistDetails.name}
-      />
+      <Flex
+        width={1}
+        sx={{
+          flexDirection: ['column', 'row'],
+        }}
+      >
+        <SelectArtist
+          artists={artistsList}
+          onClick={selectArtistFromList}
+          width={['100%', '30rem']}
+          py={[2, 4]}
+        />
+      </Flex>
       {!loading && artistDetails.id && <ArtistDetails {...artistDetails} />}
 
       {songDetails.id ? (

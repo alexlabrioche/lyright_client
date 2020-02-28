@@ -4,7 +4,10 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  connected: {},
+  isAuth: true,
+  connected: {
+    id: "je suis une ID d'un joueur connecté lolz",
+  },
   guest: {},
   code: null,
 };

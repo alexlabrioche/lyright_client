@@ -1,10 +1,59 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useMobile from '../hooks/useMobileDevice';
 
 import HomePage from '../pages/Home';
 import ArtistsPage from '../pages/Artists';
 import GamePage from '../pages/Game';
 import AuthPage from '../pages/Auth';
+
+function DesktopRoute({ children, ...rest }) {
+  const [isMobile] = useMobile();
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !isMobile ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/',
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
+function PrivateRoute({ children, ...rest }) {
+  const { isAuth } = useSelector(({ user }) => user);
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        isAuth ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/connexion',
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 export default function AppRouter() {
   return (
@@ -13,12 +62,12 @@ export default function AppRouter() {
         <Route path="/artistes">
           <ArtistsPage />
         </Route>
-        <Route path="/jouer">
+        <PrivateRoute path="/jouer">
           <GamePage />
-        </Route>
-        <Route path="/connexion">
+        </PrivateRoute>
+        <DesktopRoute path="/connexion">
           <AuthPage />
-        </Route>
+        </DesktopRoute>
         <Route path="/">
           <HomePage />
         </Route>
