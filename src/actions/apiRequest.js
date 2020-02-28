@@ -18,11 +18,10 @@ const dispatchRequestSuccess = (data, subType) => ({
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
-export const apiRequest = (subType = '', uri = '') => {
+export const apiRequest = (subType = '', uri = '', verb = 'get') => {
   return dispatch => {
     dispatch(requestStarted());
-    axios
-      .get(`${baseUrl}${uri}`)
+    axios[verb](`${baseUrl}${uri}`)
       .then(({ data }) => {
         dispatch(dispatchRequestSuccess(data, subType));
       })

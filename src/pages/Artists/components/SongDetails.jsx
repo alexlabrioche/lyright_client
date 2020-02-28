@@ -1,30 +1,18 @@
 import React from 'react';
-import { Flex } from 'rebass';
+import { Box, Heading, Text } from 'rebass';
 
 export default function SongDetails({ song }) {
+  const lyricsArr = song.lyrics.split('\n');
   return (
-    <Flex>
-      {song.title}
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat
-      veritatis laudantium numquam provident, quas nemo quasi at? Maxime,
-      voluptatum harum quia eum blanditiis cupiditate placeat maiores, fugiat
-      suscipit dolorem eveniet. Lorem ipsum, dolor sit amet consectetur
-      adipisicing elit. Quaerat veritatis laudantium numquam provident, quas
-      nemo quasi at? Maxime, voluptatum harum quia eum blanditiis cupiditate
-      placeat maiores, fugiat suscipit dolorem eveniet. Lorem ipsum, dolor sit
-      amet consectetur adipisicing elit. Quaerat veritatis laudantium numquam
-      provident, quas nemo quasi at? Maxime, voluptatum harum quia eum
-      blanditiis cupiditate placeat maiores, fugiat suscipit dolorem eveniet.
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat
-      veritatis laudantium numquam provident, quas nemo quasi at? Maxime,
-      voluptatum harum quia eum blanditiis cupiditate placeat maiores, fugiat
-      suscipit dolorem eveniet. Lorem ipsum, dolor sit amet consectetur
-      adipisicing elit. Quaerat veritatis laudantium numquam provident, quas
-      nemo quasi at? Maxime, voluptatum harum quia eum blanditiis cupiditate
-      placeat maiores, fugiat suscipit dolorem eveniet. Lorem ipsum, dolor sit
-      amet consectetur adipisicing elit. Quaerat veritatis laudantium numquam
-      provident, quas nemo quasi at? Maxime, voluptatum harum quia eum
-      blanditiis cupiditate placeat maiores, fugiat suscipit dolorem eveniet.
-    </Flex>
+    <Box>
+      <Heading fontSize={[4, 5, 6, 6]} mb={4}>
+        {song.title}
+      </Heading>
+      {lyricsArr.map(line => (
+        <Text fontSize={3} my={2}>
+          {line}
+        </Text>
+      ))}
+    </Box>
   );
 }

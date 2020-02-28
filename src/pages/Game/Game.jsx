@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button } from 'rebass';
+import { Box, Button, Flex } from 'rebass';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { apiRequest } from '../../actions/apiRequest';
@@ -30,23 +30,25 @@ function Game() {
     }
   }, [user.code]);
 
-  function handleArtist(id) {
-    dispatch(addArtist(id));
+  function handleArtist(artistId) {
+    dispatch(addArtist(artistId));
   }
 
   return (
     <AppLayout title="Jouer">
-      <Box>
-        {user.code ? (
-          <GameSettings
-            code={user.code}
-            onClick={handleArtist}
-            artists={artistsList}
-          />
-        ) : (
-          <Button onClick={initNewGame}>Commencer une partie</Button>
-        )}
-      </Box>
+      {user.code ? (
+        <GameSettings
+          code={user.code}
+          onClick={handleArtist}
+          artists={artistsList}
+        />
+      ) : (
+        <Flex justifyContent="center" alignItems="center" flexGrow={1}>
+          <Button onClick={initNewGame} fontSize={5} p={3} fontWeight="medium">
+            Commencer une partie
+          </Button>
+        </Flex>
+      )}
     </AppLayout>
   );
 }

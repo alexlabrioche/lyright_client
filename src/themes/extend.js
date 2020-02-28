@@ -38,7 +38,7 @@ export const extend = {
     appContainer: {
       my: 4,
       mx: [3, 4, 5, 6],
-      p: 4,
+      p: [3, 4],
       flexDirection: 'column',
       flexGrow: 1,
       boxShadow: '20px 20px 25px 0px rgba(0,0,0,0.2)',
