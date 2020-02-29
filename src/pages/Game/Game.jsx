@@ -18,8 +18,18 @@ function Game() {
 
   function initNewGame() {
     dispatch(addHost(user.id));
-    dispatch(apiRequest(ARTISTS, '/artists'));
-    dispatch(apiRequest(NEW_GAME, '/game/code'));
+    dispatch(
+      apiRequest(ARTISTS, {
+        verb: 'get',
+        uri: '/artists',
+      }),
+    );
+    dispatch(
+      apiRequest(NEW_GAME, {
+        verb: 'get',
+        uri: '/game/code',
+      }),
+    );
   }
 
   useEffect(() => {
@@ -42,7 +52,7 @@ function Game() {
         />
       ) : (
         <Flex justifyContent="center" alignItems="center" flexGrow={1}>
-          <Button onClick={initNewGame} fontSize={5} p={3} fontWeight="medium">
+          <Button onClick={initNewGame} fontSize={4} p={3} fontWeight="medium">
             Commencer une partie
           </Button>
         </Flex>

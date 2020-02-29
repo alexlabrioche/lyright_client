@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, Text, Button } from 'rebass';
+import { Box, Text } from 'rebass';
 import { Label, Input } from '@rebass/forms';
 import { useForm } from 'react-hook-form';
-import validationSchema from '../../../validations/joinGameSchema';
+import joinGameSchema from '../../../validations/joinGameSchema';
 
 export default function JoinGame({ onSubmit, pseudo }) {
   const { register, handleSubmit, errors } = useForm({
-    validationSchema,
+    validationSchema: joinGameSchema,
   });
   const isErrorsEmpty = Object.entries(errors).length === 0;
   return (

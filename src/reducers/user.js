@@ -1,19 +1,25 @@
 import {
   REQUEST_SUCCESS_NEW_GAME,
   REQUEST_SUCCESS_PSEUDO,
+  REQUEST_SUCCESS_LOGIN,
+  LOGOUT,
 } from '../actions/types';
 
 const initialState = {
-  isAuth: true,
-  connected: {
-    id: "je suis une ID d'un joueur connecté lolz",
-  },
+  isAuth: false,
+  connected: {},
   guest: {},
   code: null,
 };
 
 export default function(state = initialState, { type, payload }) {
   switch (type) {
+    case REQUEST_SUCCESS_LOGIN:
+      return {
+        ...state,
+        isAuth: true,
+        connected: payload.data,
+      };
     case REQUEST_SUCCESS_NEW_GAME:
       return {
         ...state,
@@ -23,6 +29,12 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         guest: { ...state.guest, pseudo: payload.data },
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isAuth: false,
+        connected: {},
       };
     default:
       return state;

@@ -25,20 +25,43 @@ function Artists() {
   } = useSelector(({ artists }) => artists);
 
   useEffect(() => {
-    dispatch(apiRequest(ARTISTS, '/artists'));
+    dispatch(
+      apiRequest(ARTISTS, {
+        uri: '/artists',
+        verb: 'get',
+      }),
+    );
   }, []);
 
   useEffect(() => {
     const { id } = artistDetails;
-    id && dispatch(apiRequest(SONGS, `/artists/${id}/songs`));
+    id &&
+      dispatch(
+        apiRequest(SONGS, {
+          uri: `/artists/${id}/songs`,
+          verb: 'get',
+        }),
+      );
   }, [artistDetails]);
 
   function selectArtistFromList(id) {
-    id && dispatch(apiRequest(ARTIST_DETAILS, `/artists/${id}`));
+    id &&
+      dispatch(
+        apiRequest(ARTIST_DETAILS, {
+          uri: `/artists/${id}`,
+          verb: 'get',
+        }),
+      );
   }
 
   function selectSong(id) {
-    id && dispatch(apiRequest(SONG_DETAILS, `/songs/${id}`));
+    id &&
+      dispatch(
+        apiRequest(SONG_DETAILS, {
+          uri: `/songs/${id}`,
+          verb: 'get',
+        }),
+      );
   }
 
   return (

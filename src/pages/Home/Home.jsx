@@ -12,14 +12,19 @@ function Home() {
   const [isMobile] = useMobileDevice();
   const dispatch = useDispatch();
   const { loading } = useSelector(({ api }) => api);
-  const { guest } = useSelector(({ user }) => user);
+  const { guest, isAuth, connected } = useSelector(({ user }) => user);
 
   function onSubmit(data) {
     console.log('data', data);
   }
 
   function getStupidPseudo() {
-    dispatch(apiRequest(PSEUDO, '/game/pseudo'));
+    dispatch(
+      apiRequest(PSEUDO, {
+        verb: 'get',
+        uri: '/game/pseudo',
+      }),
+    );
   }
 
   return (
@@ -53,7 +58,11 @@ function Home() {
         ) : (
           <>
             <Heading fontSize={[3, 4, 6]}>Lyright c'est le lol !</Heading>
-            <Text>Connectes toi pour en savoir plus</Text>
+            <Text fontSize={[2, 3]}>
+              {isAuth
+                ? `Salut ${connected.name} !`
+                : 'Connecte toi pour en savoir plus'}
+            </Text>
           </>
         )}
       </Flex>

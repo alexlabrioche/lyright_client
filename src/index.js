@@ -8,6 +8,8 @@ import { store } from './store';
 import ThemeProvider from './themes';
 import { ToastProvider } from 'react-toast-notifications';
 
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider>

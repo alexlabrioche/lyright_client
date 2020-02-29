@@ -58,5 +58,11 @@ export const extend = {
       alignItems: 'center',
       alignSelf: 'end',
     },
+    gamebox: {
+      p: '2rem',
+      backgroundColor: 'white',
+      borderRadius: '2rem',
+      boxShadow: '10px 10px 8px 0px rgba(0,0,0,0.1)',
+    },
   },
 };

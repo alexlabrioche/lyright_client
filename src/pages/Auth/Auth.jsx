@@ -1,8 +1,113 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Text, Heading, Box } from 'rebass';
+import { Label, Input } from '@rebass/forms';
+import { useForm } from 'react-hook-form';
+
+import Loader from '../../components/shared/Loader';
 import AppLayout from '../../layouts/AppLayout';
+import { apiRequest } from '../../actions/apiRequest';
+import { LOGIN } from '../../actions/types';
+import loginSchema from '../../validations/loginSchema';
+import { useHistory } from 'react-router-dom';
 
 function Auth() {
-  return <AppLayout title={'Salut grand dadet'}>Auth Page</AppLayout>;
+  const { loading } = useSelector(({ api }) => api);
+  const { connected } = useSelector(({ user }) => user);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, errors } = useForm({
+    validationSchema: loginSchema,
+  });
+  const isErrorsEmpty = Object.entries(errors).length === 0;
+
+  function handleLogin(data) {
+    dispatch(
+      apiRequest(LOGIN, {
+        verb: 'post',
+        uri: '/users/login',
+        data,
+      }),
+    );
+  }
+
+  useMemo(() => {
+    if (connected.id) {
+      history.push('/');
+    }
+  }, [connected.id]);
+
+  return (
+    <AppLayout title={'Salut grand dadet'}>
+      <Heading textAlign="center" fontSize={5} mb={5}>
+        Se connecter
+      </Heading>
+      <Box
+        as="form"
+        width="50%"
+        alignSelf="center"
+        onSubmit={handleSubmit(handleLogin)}
+      >
+        <Label htmlFor="name" my={3}>
+          <Text fontSize={2}>Pseudo :</Text>
+        </Label>
+        <Input
+          my={2}
+          fontSize={3}
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Ton Pseudo"
+          ref={register}
+        />
+        <Text
+          my={2}
+          fontSize={2}
+          fontWeight="bold"
+          textAlign="center"
+          color="error"
+        >
+          {errors.name && errors.name.message}
+        </Text>
+        <Label htmlFor="email" my={3}>
+          <Text fontSize={2}>Code :</Text>
+        </Label>
+        <Input
+          my={2}
+          fontSize={3}
+          id="email"
+          name="email"
+          type="email"
+          placeholder="johndoe@mail.com"
+          ref={register}
+        />
+        <Text
+          my={2}
+          fontSize={2}
+          fontWeight="bold"
+          textAlign="center"
+          color="error"
+        >
+          {errors.email && errors.email.message}
+        </Text>
+
+        {!loading ? (
+          <Input
+            my={4}
+            type="submit"
+            value="C'est parti"
+            sx={{
+              borderColor: isErrorsEmpty ? 'accent' : 'error',
+              borderWidth: 3,
+              fontSize: 3,
+            }}
+          />
+        ) : (
+          <Loader />
+        )}
+      </Box>
+    </AppLayout>
+  );
 }
 
 export default Auth;

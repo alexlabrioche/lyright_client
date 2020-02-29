@@ -5,14 +5,7 @@ import SelectArtist from '../../../components/SelectArtist';
 export default function GameSettings({ code, onClick, artists = [] }) {
   return (
     <>
-      <Box
-        sx={{
-          p: '2rem',
-          backgroundColor: 'white',
-          borderRadius: '2rem',
-          boxShadow: '10px 10px 8px 0px rgba(0,0,0,0.1)',
-        }}
-      >
+      <Box variant="gamebox">
         <Heading
           fontSize="12vh"
           sx={{ textAlign: 'center', letterSpacing: '2.5rem' }}
@@ -20,7 +13,7 @@ export default function GameSettings({ code, onClick, artists = [] }) {
           {code}
         </Heading>
         <Text sx={{ textAlign: 'center', fontSize: 3, mt: 3 }}>
-          Ramène tes copains et connectez vous sur vos smartphone !
+          Ramène tes copains et connectez vos smartphone !
         </Text>
       </Box>
       <Flex width={1} my={4}>
