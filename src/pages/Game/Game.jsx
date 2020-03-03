@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Flex } from 'rebass';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { useHistory } from 'react-router-dom';
 import { apiRequest } from '../../actions/apiRequest';
+import { initSocketIo } from '../../actions/socketio';
 import { NEW_GAME, ARTISTS } from '../../actions/types';
-import { addHost, addArtist, addSecretCode } from '../../actions/gameActions';
+import { addArtist } from '../../actions/gameActions';
 
+import IoLayout from '../../layouts/IoLayout';
 import AppLayout from '../../layouts/AppLayout';
-import GameSettings from './components/GameSettings';
+import Settings from './components/GameSettings';
 
 function Game() {
   const dispatch = useDispatch();
-  // const { loading } = useSelector(({ api }) => api);
+  const history = useHistory();
   const { artistsList } = useSelector(({ artists }) => artists);
   const game = useSelector(({ game }) => game);
   const user = useSelector(({ user }) => user);
 
+  console.log('game', game);
+  console.log('user', user);
+
   function initNewGame() {
-    dispatch(addHost(user.id));
     dispatch(
       apiRequest(ARTISTS, {
         verb: 'get',
@@ -26,38 +30,46 @@ function Game() {
     );
     dispatch(
       apiRequest(NEW_GAME, {
-        verb: 'get',
-        uri: '/game/code',
+        verb: 'post',
+        uri: '/game/init',
+        data: { userId: user.connected.id },
       }),
     );
+    dispatch(initSocketIo());
   }
 
-  useEffect(() => {
-    if (user.code) {
-      dispatch(addSecretCode(user.code));
-    }
-  }, [user.code]);
+  function startGame() {
+    history.push(`/jouer/${game.code}`);
+  }
 
   function handleArtist(artistId) {
     dispatch(addArtist(artistId));
   }
 
   return (
-    <AppLayout title="Jouer">
-      {user.code ? (
-        <GameSettings
-          code={user.code}
-          onClick={handleArtist}
-          artists={artistsList}
-        />
-      ) : (
-        <Flex justifyContent="center" alignItems="center" flexGrow={1}>
-          <Button onClick={initNewGame} fontSize={4} p={3} fontWeight="medium">
-            Commencer une partie
-          </Button>
-        </Flex>
-      )}
-    </AppLayout>
+    <IoLayout>
+      <AppLayout title="Jouer">
+        {!game.isInitialized ? (
+          <Flex justifyContent="center" alignItems="center" flexGrow={1}>
+            <Button
+              onClick={initNewGame}
+              fontSize={4}
+              p={3}
+              fontWeight="medium"
+            >
+              Commencer une partie
+            </Button>
+          </Flex>
+        ) : (
+          <Settings
+            game={game}
+            onClick={handleArtist}
+            artists={artistsList}
+            start={startGame}
+          />
+        )}
+      </AppLayout>
+    </IoLayout>
   );
 }
 

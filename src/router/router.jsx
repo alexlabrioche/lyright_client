@@ -6,6 +6,7 @@ import useMobile from '../hooks/useMobileDevice';
 import HomePage from '../pages/Home';
 import ArtistsPage from '../pages/Artists';
 import GamePage from '../pages/Game';
+import InGamePage from '../pages/InGame';
 import AuthPage from '../pages/Auth';
 import UserSpacePage from '../pages/UserSpace';
 
@@ -41,6 +42,9 @@ export default function AppRouter() {
         <Route path="/artistes">
           <ArtistsPage />
         </Route>
+        <DesktopRoute path="/jouer/:code">
+          {authMiddleware(InGamePage, isAuth)}
+        </DesktopRoute>
         <DesktopRoute path="/jouer">
           {authMiddleware(GamePage, isAuth)}
         </DesktopRoute>

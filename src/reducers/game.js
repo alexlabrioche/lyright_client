@@ -1,4 +1,8 @@
-import { ADD_HOST_ID, ADD_ARTIST_ID, ADD_SECRET_CODE } from '../actions/types';
+import {
+  ADD_ARTIST_ID,
+  REQUEST_SUCCESS_NEW_GAME,
+  ADD_PLAYER,
+} from '../actions/types';
 
 const initialState = {
   host: '',
@@ -6,24 +10,29 @@ const initialState = {
   artists: [],
   score: {},
   round: 0,
+  isInitialized: false,
+  players: [],
 };
 
 export default function(state = initialState, { type, payload }) {
   switch (type) {
-    case ADD_HOST_ID:
+    case REQUEST_SUCCESS_NEW_GAME:
+      const { code, userId } = payload.data;
       return {
         ...state,
-        host: payload,
+        code: code,
+        host: userId,
+        isInitialized: true,
       };
     case ADD_ARTIST_ID:
       state.artists.length <= 1 && state.artists.push({ artist: payload });
       return {
         ...state,
       };
-    case ADD_SECRET_CODE:
+    case ADD_PLAYER:
+      state.players.push(payload);
       return {
         ...state,
-        code: payload,
       };
     default:
       return state;

@@ -1,31 +1,14 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Heading, Text, Flex, Box, Button } from 'rebass';
-import { apiRequest } from '../../actions/apiRequest';
-import { PSEUDO } from '../../actions/types';
+import { useSelector } from 'react-redux';
+import { Heading, Text, Flex } from 'rebass';
 
 import useMobileDevice from '../../hooks/useMobileDevice';
 import AppLayout from '../../layouts/AppLayout';
-import JoinGame from './components/JoinGame';
+import Mobile from './components/Mobile';
 
 function Home() {
   const [isMobile] = useMobileDevice();
-  const dispatch = useDispatch();
-  const { loading } = useSelector(({ api }) => api);
-  const { guest, isAuth, connected } = useSelector(({ user }) => user);
-
-  function onSubmit(data) {
-    console.log('data', data);
-  }
-
-  function getStupidPseudo() {
-    dispatch(
-      apiRequest(PSEUDO, {
-        verb: 'get',
-        uri: '/game/pseudo',
-      }),
-    );
-  }
+  const { isAuth, connected } = useSelector(({ user }) => user);
 
   return (
     <AppLayout title={'Accueil'}>
@@ -38,23 +21,7 @@ function Home() {
         }}
       >
         {isMobile ? (
-          <Box>
-            <Heading
-              sx={{
-                fontWeight: 'bold',
-                fontSize: 5,
-                textAlign: 'center',
-                my: 5,
-              }}
-            >
-              Rejoindre <br />
-              une partie
-            </Heading>
-            <JoinGame onSubmit={onSubmit} pseudo={guest.pseudo} />
-            <Button variant="secondary" width="100%" onClick={getStupidPseudo}>
-              En manque d'inspiration ?
-            </Button>
-          </Box>
+          <Mobile />
         ) : (
           <>
             <Heading fontSize={[3, 4, 6]}>Lyright c'est le lol !</Heading>

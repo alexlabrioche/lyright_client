@@ -6,10 +6,13 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  isAuth: false,
-  connected: {},
+  isAuth: true,
+  connected: {
+    id: '8412a0b0-9f0e-477e-a5d6-ae84c10e7a3a',
+    name: 'jeSappelChiant',
+    email: 'jesappel@chiant.com',
+  },
   guest: {},
-  code: null,
 };
 
 export default function(state = initialState, { type, payload }) {
@@ -19,11 +22,6 @@ export default function(state = initialState, { type, payload }) {
         ...state,
         isAuth: true,
         connected: payload.data,
-      };
-    case REQUEST_SUCCESS_NEW_GAME:
-      return {
-        ...state,
-        code: payload.data,
       };
     case REQUEST_SUCCESS_PSEUDO:
       return {

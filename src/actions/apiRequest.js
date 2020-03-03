@@ -16,7 +16,7 @@ const dispatchRequestSuccess = (data, subType) => ({
   payload: data,
 });
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL;
+const baseUrl = process.env.REACT_APP_SERVER_BASE_URL;
 
 const axiosDefaultOptions = {
   uri: '',
@@ -31,7 +31,7 @@ export const apiRequest = (subType = '', options = axiosDefaultOptions) => {
   const { uri, verb, data, headers } = options;
   return dispatch => {
     dispatch(requestStarted());
-    axios[verb](`${baseUrl}${uri}`, { headers, ...data })
+    axios[verb](`${baseUrl}/api${uri}`, { headers, ...data })
       .then(({ data }) => {
         dispatch(dispatchRequestSuccess(data, subType));
       })

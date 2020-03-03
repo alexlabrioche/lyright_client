@@ -33,14 +33,14 @@ export default function JoinGame({ onSubmit, pseudo }) {
       >
         {errors.pseudo && errors.pseudo.message}
       </Text>
-      <Label htmlFor="secretCode" my={3}>
+      <Label htmlFor="code" my={3}>
         <Text fontSize={2}>Code :</Text>
       </Label>
       <Input
         my={2}
         fontSize={3}
-        id="secretCode"
-        name="secretCode"
+        id="code"
+        name="code"
         type="text"
         placeholder="m4kh0"
         ref={register}
@@ -52,7 +52,7 @@ export default function JoinGame({ onSubmit, pseudo }) {
         textAlign="center"
         color="error"
       >
-        {errors.secretCode && errors.secretCode.message}
+        {errors.code && errors.code.message}
       </Text>
       <Input
         my={4}

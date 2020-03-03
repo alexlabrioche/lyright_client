@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
-  secretCode: yup
+  code: yup
     .string()
     .length(5, '5 charactères !!')
     .matches(/^[a-zA-Z0-9]*$/, 'Uniquement alpha Numérique')
