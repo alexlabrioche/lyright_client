@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 
 import Loader from '../../components/shared/Loader';
 import AppLayout from '../../layouts/AppLayout';
-import { apiRequest } from '../../actions/apiRequest';
-import { LOGIN } from '../../actions/types';
+import { apiRequest } from '../../store/actions/apiRequest';
+import { LOGIN } from '../../store/actions/types';
 import loginSchema from '../../validations/loginSchema';
 import { useHistory } from 'react-router-dom';
 

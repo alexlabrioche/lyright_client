@@ -2,10 +2,10 @@ import React from 'react';
 import { Button, Flex } from 'rebass';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { apiRequest } from '../../actions/apiRequest';
-import { initSocketIo } from '../../actions/socketio';
-import { NEW_GAME, ARTISTS } from '../../actions/types';
-import { addArtist } from '../../actions/gameActions';
+import { apiRequest } from '../../store/actions/apiRequest';
+import { initSocketIo } from '../../store/actions/socketio';
+import { NEW_GAME, ARTISTS } from '../../store/actions/types';
+import { addArtist } from '../../store/actions/gameActions';
 
 import IoLayout from '../../layouts/IoLayout';
 import AppLayout from '../../layouts/AppLayout';

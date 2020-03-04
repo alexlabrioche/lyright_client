@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiRequest } from '../../actions/apiRequest';
+import { apiRequest } from '../../store/actions/apiRequest';
 import {
   ARTIST_DETAILS,
   ARTISTS,
   SONGS,
   SONG_DETAILS,
-} from '../../actions/types';
+} from '../../store/actions/types';
 import { Flex } from 'rebass';
 import AppLayout from '../../layouts/AppLayout';
 import SelectArtist from '../../components/SelectArtist';

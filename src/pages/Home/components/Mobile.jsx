@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Heading, Box, Button } from 'rebass';
 
-import { apiRequest } from '../../../actions/apiRequest';
-import { PSEUDO } from '../../../actions/types';
+import { apiRequest } from '../../../store/actions/apiRequest';
+import { PSEUDO } from '../../../store/actions/types';
 import JoinGame from './JoinGame';
 
 export default function Mobile({ onSubmit, getStupidPseudo }) {
