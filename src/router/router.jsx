@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { isLoaded, isEmpty } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
+
 import useMobile from '../hooks/useMobileDevice';
 
 import HomePage from '../pages/Home';
@@ -9,19 +11,26 @@ import GamePage from '../pages/Game';
 import InGamePage from '../pages/InGame';
 import AuthPage from '../pages/Auth';
 import UserSpacePage from '../pages/UserSpace';
+import SplashScreen from '../layouts/SplashScreen';
 
-function DesktopRoute({ children, ...rest }) {
-  const [isMobile] = useMobile();
+function AuthIsLoaded({ children }) {
+  const auth = useSelector(state => state.firebase.auth);
+  if (!isLoaded(auth)) return <SplashScreen />;
+  return children;
+}
+
+function PrivateRoute({ children, ...rest }) {
+  const auth = useSelector(state => state.firebase.auth);
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        !isMobile ? (
+        isLoaded(auth) && !isEmpty(auth) ? (
           children
         ) : (
           <Redirect
             to={{
-              pathname: '/',
+              pathname: '/login',
               state: { from: location },
             }}
           />
@@ -30,34 +39,33 @@ function DesktopRoute({ children, ...rest }) {
     />
   );
 }
-function authMiddleware(Component, authenticated) {
-  return authenticated ? <Component /> : <Redirect to={'/'} />;
-}
 
 export default function AppRouter() {
-  const { isAuth } = useSelector(({ user }) => user);
+  const [isMobile] = useMobile();
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/artistes">
-          <ArtistsPage />
-        </Route>
-        <DesktopRoute path="/jouer/:code">
-          {authMiddleware(InGamePage, isAuth)}
-        </DesktopRoute>
-        <DesktopRoute path="/jouer">
-          {authMiddleware(GamePage, isAuth)}
-        </DesktopRoute>
-        <DesktopRoute path="/espace-perso">
-          {authMiddleware(UserSpacePage, isAuth)}
-        </DesktopRoute>
-        <DesktopRoute path="/connexion">
-          <AuthPage />
-        </DesktopRoute>
-        <Route path="/">
-          <HomePage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <AuthIsLoaded>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/artistes">
+            <ArtistsPage />
+          </Route>
+          <PrivateRoute path="/jouer/:code">
+            {!isMobile ? <InGamePage /> : <Redirect to={'/'} />}
+          </PrivateRoute>
+          <PrivateRoute path="/jouer">
+            {!isMobile ? <GamePage /> : <Redirect to={'/'} />}
+          </PrivateRoute>
+          <PrivateRoute path="/espace-perso">
+            {!isMobile ? <UserSpacePage /> : <Redirect to={'/'} />}
+          </PrivateRoute>
+          <Route path="/connexion">
+            <AuthPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </AuthIsLoaded>
   );
 }

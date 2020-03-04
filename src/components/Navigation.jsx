@@ -1,16 +1,16 @@
 import React from 'react';
 import { Heading, Flex, Button, Box } from 'rebass';
 import { useSelector } from 'react-redux';
+import { isEmpty } from 'react-redux-firebase';
 
 import useHover from '../hooks/useHover';
 import Link from './shared/Link';
 import useMobileDevice from '../hooks/useMobileDevice';
 
 function Navigation() {
-  const [hoverRef, isHovered] = useHover();
-
   const [isMobile] = useMobileDevice();
-  const { isAuth, connected } = useSelector(({ user }) => user);
+  const [hoverRef, isHovered] = useHover();
+  const { auth } = useSelector(({ firebase }) => firebase);
 
   return (
     <Flex variant="nav">
@@ -21,24 +21,26 @@ function Navigation() {
       <Link to="/artistes" mr={[3, 4]}>
         Artistes
       </Link>
-      {!isMobile && isAuth ? (
-        <Link to="/jouer" mr={[3, 4]}>
+      {!isMobile && !isEmpty(auth) ? (
+        <Link to="/jouer" mr={[2, 3]}>
           Jouer
         </Link>
       ) : null}
-      {isMobile ? null : connected.id ? (
-        <Flex width={256} justifyContent="end">
-          <Button variant={isHovered ? 'primary' : 'outline'} ref={hoverRef}>
-            <Link to="/espace-perso">
-              {isHovered ? 'Espace Personnel' : `Salut ${connected.name} !`}
-            </Link>
+      {!isMobile ? (
+        !isEmpty(auth) ? (
+          <Flex width={256} justifyContent="end">
+            <Button variant={isHovered ? 'primary' : 'outline'} ref={hoverRef}>
+              <Link to="/espace-perso">
+                {isHovered ? 'Espace Personnel' : `Salut ${auth.displayName} !`}
+              </Link>
+            </Button>
+          </Flex>
+        ) : (
+          <Button variant={!isEmpty(auth) ? 'primary' : 'secondary'}>
+            <Link to="/connexion">Se connecter</Link>
           </Button>
-        </Flex>
-      ) : (
-        <Button variant={isAuth ? 'primary' : 'secondary'}>
-          <Link to="/connexion">Se connecter</Link>
-        </Button>
-      )}
+        )
+      ) : null}
     </Flex>
   );
 }
