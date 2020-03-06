@@ -64,5 +64,10 @@ export const extend = {
       borderRadius: '2rem',
       boxShadow: '10px 10px 8px 0px rgba(0,0,0,0.1)',
     },
+    avatar: {
+      borderRadius: '100%',
+      height: '100%',
+      width: 'auto',
+    },
   },
 };

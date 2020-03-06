@@ -1,15 +1,15 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Link } from 'rebass';
+import { Box } from 'rebass';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function AppLink({ to = '/', children = '', ...props }) {
   return (
-    <Link {...props}>
-      <RouterLink to={to} style={{ color: 'inherit', textDecoration: 'none' }}>
+    <Box {...props}>
+      <Link to={to} style={{ color: 'inherit', textDecoration: 'none' }}>
         {children}
-      </RouterLink>
-    </Link>
+      </Link>
+    </Box>
   );
 }
 

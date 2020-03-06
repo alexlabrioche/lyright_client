@@ -6,7 +6,7 @@ import { apiRequest } from '../../../store/actions/apiRequest';
 import { PSEUDO } from '../../../store/actions/types';
 import JoinGame from './JoinGame';
 
-export default function Mobile({ onSubmit, getStupidPseudo }) {
+export default function Mobile() {
   const { guest } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../store/actions/apiRequest';
 import {
@@ -24,16 +24,16 @@ function Artists() {
     songDetails,
   } = useSelector(({ artists }) => artists);
 
-  useEffect(() => {
+  useMemo(() => {
     dispatch(
       apiRequest(ARTISTS, {
         uri: '/artists',
         verb: 'get',
       }),
     );
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
+  useMemo(() => {
     const { id } = artistDetails;
     id &&
       dispatch(
@@ -42,7 +42,7 @@ function Artists() {
           verb: 'get',
         }),
       );
-  }, [artistDetails]);
+  }, [dispatch, artistDetails]);
 
   function selectArtistFromList(id) {
     id &&

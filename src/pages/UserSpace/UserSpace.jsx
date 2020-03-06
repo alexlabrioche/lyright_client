@@ -1,14 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Heading } from 'rebass';
+import { Heading, Button } from 'rebass';
 import AppLayout from '../../layouts/AppLayout';
+import { useFirebase } from 'react-redux-firebase';
 
 export default function UserSpace() {
-  const { connected } = useSelector(({ user }) => user);
+  const { auth } = useSelector(({ firebase }) => firebase);
+  const firebase = useFirebase();
 
   return (
     <AppLayout title={'Accueil'}>
-      <Heading fontSize={[4, 5]}>Salut {connected.name}</Heading>
+      <Heading fontSize={[4, 5]}>Salut {auth.displayName}</Heading>
+      <Button onClick={firebase.logout}>Se déconnecter</Button>
     </AppLayout>
   );
 }

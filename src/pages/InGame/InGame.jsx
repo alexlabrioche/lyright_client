@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AppLayout from '../../layouts/AppLayout';
 
 export default function InGame() {
@@ -12,7 +12,7 @@ export default function InGame() {
     if (params.code !== game.code) {
       history.push('/');
     }
-  }, [game, params]);
+  }, [game, params, history]);
 
   return <AppLayout>InGame</AppLayout>;
 }

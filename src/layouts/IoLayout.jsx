@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function IoLayout({ children }) {
   const { socket } = useSelector(({ socket }) => socket);
@@ -10,7 +10,7 @@ export default function IoLayout({ children }) {
     //   console.log('userList', userList);
     //   setUserList(userList);
     // });
-  }, []);
+  }, [socket]);
 
   return children;
 }

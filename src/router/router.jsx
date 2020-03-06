@@ -13,9 +13,21 @@ import AuthPage from '../pages/Auth';
 import UserSpacePage from '../pages/UserSpace';
 import SplashScreen from '../layouts/SplashScreen';
 
+import {
+  HOME_ROUTE,
+  ARTISTS_ROUTE,
+  IN_GAME_ROUTE,
+  SETUP_GAME_ROUTE,
+  USER_SPACE_ROUTE,
+  AUTH_ROUTE,
+} from './constants';
+
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth);
-  if (!isLoaded(auth)) return <SplashScreen />;
+  const [isAnimationCompleted, setIsAnimationCompleted] = React.useState(false);
+
+  if (!isLoaded(auth) || !isAnimationCompleted)
+    return <SplashScreen isCompleted={setIsAnimationCompleted} />;
   return children;
 }
 
@@ -30,7 +42,7 @@ function PrivateRoute({ children, ...rest }) {
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: HOME_ROUTE,
               state: { from: location },
             }}
           />
@@ -46,22 +58,22 @@ export default function AppRouter() {
     <AuthIsLoaded>
       <BrowserRouter>
         <Switch>
-          <Route path="/artistes">
+          <Route path={ARTISTS_ROUTE}>
             <ArtistsPage />
           </Route>
-          <PrivateRoute path="/jouer/:code">
-            {!isMobile ? <InGamePage /> : <Redirect to={'/'} />}
+          <PrivateRoute path={IN_GAME_ROUTE}>
+            {!isMobile ? <InGamePage /> : <Redirect to={HOME_ROUTE} />}
           </PrivateRoute>
-          <PrivateRoute path="/jouer">
-            {!isMobile ? <GamePage /> : <Redirect to={'/'} />}
+          <PrivateRoute path={SETUP_GAME_ROUTE}>
+            {!isMobile ? <GamePage /> : <Redirect to={HOME_ROUTE} />}
           </PrivateRoute>
-          <PrivateRoute path="/espace-perso">
-            {!isMobile ? <UserSpacePage /> : <Redirect to={'/'} />}
+          <PrivateRoute path={USER_SPACE_ROUTE}>
+            {!isMobile ? <UserSpacePage /> : <Redirect to={HOME_ROUTE} />}
           </PrivateRoute>
-          <Route path="/connexion">
+          <Route path={AUTH_ROUTE}>
             <AuthPage />
           </Route>
-          <Route path="/">
+          <Route path={HOME_ROUTE}>
             <HomePage />
           </Route>
         </Switch>
