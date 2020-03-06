@@ -18,9 +18,6 @@ function Game() {
   const game = useSelector(({ game }) => game);
   const user = useSelector(({ user }) => user);
 
-  console.log('game', game);
-  console.log('user', user);
-
   function initNewGame() {
     dispatch(
       apiRequest(ARTISTS, {

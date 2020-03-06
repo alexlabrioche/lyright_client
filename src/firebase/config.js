@@ -1,10 +1,10 @@
 export default {
-  apiKey: 'AIzaSyC_DsLfN_5XobbicfqGQz901j6zFlhY8_0',
-  authDomain: 'lyright-app.firebaseapp.com',
-  databaseURL: 'https://lyright-app.firebaseio.com',
-  projectId: 'lyright-app',
-  storageBucket: 'lyright-app.appspot.com',
-  messagingSenderId: '109582410753',
-  appId: '1:109582410753:web:a48fedd196d4f047fe0c00',
-  measurementId: 'G-HPXKBT6Q0Z',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };

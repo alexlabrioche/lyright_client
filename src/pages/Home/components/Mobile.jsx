@@ -11,7 +11,7 @@ export default function Mobile() {
   const dispatch = useDispatch();
 
   function onSubmit(data) {
-    console.log('data', data);
+    // console.log('data', data);
     // socket.emit(VERIFY_USER, name, setUser);
   }
 
