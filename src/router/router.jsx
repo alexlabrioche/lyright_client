@@ -23,7 +23,7 @@ import {
 } from './constants';
 
 function AuthIsLoaded({ children }) {
-  const auth = useSelector(state => state.firebase.auth);
+  const { auth } = useSelector(state => state.firebase);
   const [isAnimationCompleted, setIsAnimationCompleted] = React.useState(false);
 
   if (!isLoaded(auth) || !isAnimationCompleted)

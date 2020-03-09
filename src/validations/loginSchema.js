@@ -10,8 +10,8 @@ const loginUserSchema = yup.object().shape({
     .string()
     .required('Veuillez entrer votre mot de passe')
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      '8 caractères minimum dont une majuscule, une minuscule, un nombre et un caractère spécial',
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      '8 caractères minimum dont une majuscule, une minuscule et un nombre',
     ),
 });
 

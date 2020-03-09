@@ -1,6 +1,8 @@
 export const REQUEST_STARTED = 'REQUEST_STARTED';
 export const REQUEST_FAIL = 'REQUEST_FAIL';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
+export const ADD_ACCESS_TOKEN = 'ADD_ACCESS_TOKEN';
+export const REMOVE_ACCESS_TOKEN = 'REMOVE_ACCESS_TOKEN';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';

@@ -16,8 +16,8 @@ function Game() {
   const history = useHistory();
   const { artistsList } = useSelector(({ artists }) => artists);
   const game = useSelector(({ game }) => game);
-  const user = useSelector(({ user }) => user);
-
+  const { auth } = useSelector(({ firebase }) => firebase);
+  console.log('auth', auth);
   function initNewGame() {
     dispatch(
       apiRequest(ARTISTS, {
@@ -27,9 +27,9 @@ function Game() {
     );
     dispatch(
       apiRequest(NEW_GAME, {
-        verb: 'post',
-        uri: '/game/init',
-        data: { userId: user.connected.id },
+        verb: 'get',
+        uri: '/game',
+        // data: { userId: user.connected.id },
       }),
     );
     dispatch(initSocketIo());

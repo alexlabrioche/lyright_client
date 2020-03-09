@@ -1,6 +1,22 @@
 import axios from 'axios';
+import {
+  REQUEST_STARTED,
+  REQUEST_SUCCESS,
+  REQUEST_FAIL,
+  ADD_ACCESS_TOKEN,
+  REMOVE_ACCESS_TOKEN,
+} from './types';
 
-import { REQUEST_STARTED, REQUEST_SUCCESS, REQUEST_FAIL } from './types';
+const baseUrl = process.env.REACT_APP_SERVER_BASE_URL;
+
+const axiosDefaultOptions = {
+  uri: '',
+  verb: 'get',
+  data: {},
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
 const requestStarted = () => ({
   type: REQUEST_STARTED,
@@ -16,16 +32,14 @@ const dispatchRequestSuccess = (data, subType) => ({
   payload: data,
 });
 
-const baseUrl = process.env.REACT_APP_SERVER_BASE_URL;
+export const removeAccessToken = () => ({
+  type: REMOVE_ACCESS_TOKEN,
+});
 
-const axiosDefaultOptions = {
-  uri: '',
-  verb: 'get',
-  data: {},
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
+export const addAccessToken = token => ({
+  type: ADD_ACCESS_TOKEN,
+  payload: token,
+});
 
 export const apiRequest = (subType = '', options = axiosDefaultOptions) => {
   const { uri, verb, data, headers } = options;

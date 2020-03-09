@@ -1,21 +1,47 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import Helmet from 'react-helmet';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
+import { isEmpty, isLoaded } from 'react-redux-firebase';
+
 import { Flex } from 'rebass';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { addAccessToken, removeAccessToken } from '../store/actions/apiRequest';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 function AppLayout({ children, title = '' }) {
-  const { error } = useSelector(({ api }) => api);
+  const dispatch = useDispatch();
+  const { error, token } = useSelector(({ api }) => api);
   const { addToast, removeAllToasts } = useToasts();
+  const { auth, authError } = useSelector(state => state.firebase);
+
+  const addErrorCallback = useCallback(
+    function addError(msg) {
+      addToast(msg, { appearance: 'error', autoDismiss: true });
+    },
+    [addToast],
+  );
 
   useMemo(() => {
-    error && addToast(error, { appearance: 'error', autoDismiss: true });
+    if (!isEmpty(auth) && !token) {
+      dispatch(addAccessToken(auth.stsTokenManager.accessToken));
+    }
+    if (isLoaded(auth) && isEmpty(auth)) {
+      dispatch(removeAccessToken());
+    }
+  }, [auth, token, dispatch]);
+
+  useMemo(() => {
+    authError && addErrorCallback(authError.message);
     return removeAllToasts();
-  }, [error, addToast, removeAllToasts]);
+  }, [authError, addErrorCallback, removeAllToasts]);
+
+  useMemo(() => {
+    error && addErrorCallback(error);
+    return removeAllToasts();
+  }, [error, addErrorCallback, removeAllToasts]);
 
   return (
     <Flex variant="app">

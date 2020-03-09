@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Text, Box, Button } from 'rebass';
 import { Label, Input } from '@rebass/forms';
@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 
 import useToggle from '../../hooks/useToggle';
-import Loader from '../../components/shared/Loader';
 import AppLayout from '../../layouts/AppLayout';
 import loginSchema from '../../validations/loginSchema';
 import signupSchema from '../../validations/signupSchema';
@@ -16,9 +15,8 @@ import signupSchema from '../../validations/signupSchema';
 function Auth() {
   const history = useHistory();
   const firebase = useFirebase();
-  const auth = useSelector(state => state.firebase.auth);
+  const { auth } = useSelector(state => state.firebase);
   const [isFormSignup, toggleFormSignup] = useToggle(false);
-  const [loginNoUserError, setLoginNoUserError] = useState(null);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: isFormSignup ? signupSchema : loginSchema,
   });
@@ -26,18 +24,15 @@ function Auth() {
   const isErrorsEmpty = Object.entries(errors).length === 0;
 
   function loginWithGoogle() {
-    return firebase.login({ provider: 'google', type: 'popup' });
+    firebase.login({ provider: 'google', type: 'popup' });
   }
+
   function loginWithCredentials({ email, password }) {
-    return firebase.login({ email, password });
+    firebase.login({ email, password });
   }
-  function createNewUser({ email, password, username }) {
-    return firebase
-      .createUser({ email, password }, { username, email })
-      .catch(e => {
-        setLoginNoUserError("Oups tu n'a pas l'air inscrit");
-        toggleFormSignup();
-      });
+
+  async function createNewUser({ email, password, username }) {
+    firebase.createUser({ email, password }, { displayName: username, email });
   }
 
   function handleLogin(data) {
@@ -50,13 +45,6 @@ function Auth() {
     }
   }, [auth, history]);
 
-  useMemo(() => {
-    loginNoUserError &&
-      setTimeout(() => {
-        setLoginNoUserError(null);
-      }, 5000);
-  }, [loginNoUserError]);
-
   return (
     <AppLayout title={'Salut grand dadet'}>
       <Box width="50%" alignSelf="center" onSubmit={handleSubmit(handleLogin)}>
@@ -68,9 +56,6 @@ function Auth() {
         >
           {isFormSignup && (
             <>
-              <Text fontSize={4} color="error">
-                {loginNoUserError}
-              </Text>
               <Label htmlFor="username" my={3}>
                 <Text fontSize={2}>Nom d'utilisateur :</Text>
               </Label>
@@ -168,7 +153,13 @@ function Auth() {
           <Input
             my={4}
             type="submit"
-            value={isFormSignup ? "S'inscrire" : 'Se connecter'}
+            value={
+              !isLoaded(auth)
+                ? 'Chargement'
+                : isFormSignup
+                ? "S'enregistrer"
+                : 'Se connecter'
+            }
             sx={{
               borderColor: isErrorsEmpty ? 'secondary' : 'error',
               borderWidth: 3,
@@ -176,9 +167,7 @@ function Auth() {
             }}
           />
         </Box>
-        {!isLoaded(auth) ? (
-          <Loader />
-        ) : isEmpty(auth) && !isFormSignup ? (
+        {isEmpty(auth) && !isFormSignup ? (
           <GoogleButton
             style={{ width: '100%' }}
             type="light"

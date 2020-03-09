@@ -20,7 +20,7 @@ function Navigation() {
   const location = useLocation();
   const [isMobile] = useMobileDevice();
   const [hoverRef, isHovered] = useHover();
-  const auth = useSelector(({ firebase }) => firebase.auth);
+  const { auth, profile } = useSelector(({ firebase }) => firebase);
 
   return (
     <Flex variant="nav">
@@ -38,18 +38,18 @@ function Navigation() {
       ) : null}
       {!isMobile ? (
         !isEmpty(auth) ? (
-          <Flex width={256} height="3rem" justifyContent="end" ref={hoverRef}>
-            {isHovered ? (
-              <Button variant="primary">
-                <Link to={USER_SPACE_ROUTE}>Espace Personnel</Link>
-              </Button>
-            ) : (
-              <Flex alignItems="center" justifyContent="end">
-                <Text mr={3}>Salut {auth.displayName} !</Text>
-                <Image src={auth.photoURL} variant="avatar" />
+          <Link to={USER_SPACE_ROUTE}>
+            <Flex height="3rem" justifyContent="end" ref={hoverRef}>
+              <Flex width={256} alignItems="center" justifyContent="end">
+                <Text width="100%" textAlign="end" mr={3}>
+                  {isHovered
+                    ? 'Espace Personnel'
+                    : `Salut ${auth.displayName || profile.displayName} !`}
+                </Text>
               </Flex>
-            )}
-          </Flex>
+              <Image src={auth.photoURL} variant="avatar" />
+            </Flex>
+          </Link>
         ) : location.pathname !== AUTH_ROUTE ? (
           <Button variant={'secondary'}>
             <Link to={AUTH_ROUTE}>Se connecter</Link>
