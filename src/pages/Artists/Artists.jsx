@@ -24,6 +24,7 @@ function Artists() {
     songDetails,
   } = useSelector(({ artists }) => artists);
 
+  console.log('artistDetails', artistDetails);
   useMemo(() => {
     dispatch(
       apiRequest(ARTISTS, {
@@ -33,7 +34,7 @@ function Artists() {
     );
   }, [dispatch]);
 
-  useMemo(() => {
+  React.useEffect(() => {
     const { id } = artistDetails;
     id &&
       dispatch(

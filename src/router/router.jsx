@@ -8,6 +8,7 @@ import useMobile from '../hooks/useMobileDevice';
 import HomePage from '../pages/Home';
 import ArtistsPage from '../pages/Artists';
 import GamePage from '../pages/Game';
+import MobilePage from '../pages/Mobile';
 import InGamePage from '../pages/InGame';
 import AuthPage from '../pages/Auth';
 import UserSpacePage from '../pages/UserSpace';
@@ -54,7 +55,10 @@ function PrivateRoute({ children, ...rest }) {
 
 export default function AppRouter() {
   const [isMobile] = useMobile();
-  return (
+
+  return isMobile ? (
+    <MobilePage />
+  ) : (
     <AuthIsLoaded>
       <BrowserRouter>
         <Switch>

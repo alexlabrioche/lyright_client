@@ -1,13 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Heading, Text, Flex } from 'rebass';
+import { Heading, Button, Flex } from 'rebass';
+import Link from '../../components/shared/Link';
 
-import useMobileDevice from '../../hooks/useMobileDevice';
 import AppLayout from '../../layouts/AppLayout';
-import Mobile from './components/Mobile';
 
 function Home() {
-  const [isMobile] = useMobileDevice();
   const { isAuth, connected } = useSelector(({ user }) => user);
 
   return (
@@ -20,18 +18,12 @@ function Home() {
           justifyContent: 'space-around',
         }}
       >
-        {isMobile ? (
-          <Mobile />
-        ) : (
-          <>
-            <Heading fontSize={[3, 4, 6]}>Lyright c'est le lol !</Heading>
-            <Text fontSize={[2, 3]}>
-              {isAuth
-                ? `Salut ${connected.name} !`
-                : 'Connecte toi pour en savoir plus'}
-            </Text>
-          </>
-        )}
+        <Heading fontSize={[3, 4, 6]} mb={5}>
+          Lyright c'est le lol !
+        </Heading>
+        <Button fontSize={[2, 3]}>
+          <Link to="/jouer">Jouer</Link>
+        </Button>
       </Flex>
     </AppLayout>
   );

@@ -17,7 +17,8 @@ function Game() {
   const { artistsList } = useSelector(({ artists }) => artists);
   const game = useSelector(({ game }) => game);
   const { auth } = useSelector(({ firebase }) => firebase);
-  console.log('auth', auth);
+  console.log('game', game);
+
   function initNewGame() {
     dispatch(
       apiRequest(ARTISTS, {
@@ -39,15 +40,11 @@ function Game() {
     history.push(`/jouer/${game.code}`);
   }
 
-  function handleArtist(artistId) {
-    dispatch(addArtist(artistId));
-  }
-
   return (
     <IoLayout>
       <AppLayout title="Jouer">
         {!game.isInitialized ? (
-          <Flex justifyContent="center" alignItems="center" flexGrow={1}>
+          <Flex justifyContent="center" alignItems="center">
             <Button
               onClick={initNewGame}
               fontSize={4}
@@ -58,12 +55,7 @@ function Game() {
             </Button>
           </Flex>
         ) : (
-          <Settings
-            game={game}
-            onClick={handleArtist}
-            artists={artistsList}
-            start={startGame}
-          />
+          <Settings game={game} artists={artistsList} start={startGame} />
         )}
       </AppLayout>
     </IoLayout>

@@ -46,6 +46,15 @@ export const extend = {
       borderRadius: '1rem',
       color: 'baseFont',
     },
+    mobileContainer: {
+      m: 2,
+      p: 3,
+      flexDirection: 'column',
+      flexGrow: 1,
+      bg: 'primaryLighter',
+      borderRadius: '0.5rem',
+      color: 'baseFont',
+    },
     nav: {
       px: [1, 3],
       py: 2,
