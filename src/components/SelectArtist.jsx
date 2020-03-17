@@ -2,12 +2,12 @@ import React from 'react';
 import { Box } from 'rebass';
 import { Select } from '@rebass/forms';
 
-export default function SelectArtist({ artists = [], onClick, ...rest }) {
+export default function SelectArtist({ artists = [], handleArtist, ...rest }) {
   return (
     <Box {...rest}>
       <Select
-        id={'artist'}
-        name={'artist'}
+        id="artists"
+        name="artists"
         sx={{
           borderColor: 'accent',
           fontSize: 4,
@@ -15,12 +15,11 @@ export default function SelectArtist({ artists = [], onClick, ...rest }) {
           px: 4,
           borderWidth: 3,
         }}
+        onChange={handleArtist}
       >
-        <option key={0} onClick={() => onClick({ id: 0, name: null })}>
-          Choisis un artiste !
-        </option>
+        <option key={0}>Choisis un artiste !</option>
         {artists.map(({ name, id }) => (
-          <option key={id} onClick={() => onClick(id)}>
+          <option key={id} value={id}>
             {name}
           </option>
         ))}

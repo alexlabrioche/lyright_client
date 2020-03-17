@@ -45,24 +45,24 @@ function Artists() {
       );
   }, [dispatch, artistDetails]);
 
-  function selectArtistFromList(id) {
-    id &&
-      dispatch(
-        apiRequest(ARTIST_DETAILS, {
-          uri: `/artists/${id}`,
-          verb: 'get',
-        }),
-      );
+  function handleArtist(event) {
+    const id = event.target.value;
+    console.log('event.target.name', event.target.name);
+    dispatch(
+      apiRequest(ARTIST_DETAILS, {
+        uri: `/artists/${id}`,
+        verb: 'get',
+      }),
+    );
   }
 
-  function selectSong(id) {
-    id &&
-      dispatch(
-        apiRequest(SONG_DETAILS, {
-          uri: `/songs/${id}`,
-          verb: 'get',
-        }),
-      );
+  function handleSong(id) {
+    dispatch(
+      apiRequest(SONG_DETAILS, {
+        uri: `/songs/${id}`,
+        verb: 'get',
+      }),
+    );
   }
 
   return (
@@ -75,7 +75,7 @@ function Artists() {
       >
         <SelectArtist
           artists={artistsList}
-          onClick={selectArtistFromList}
+          handleArtist={handleArtist}
           width={['100%', '30rem']}
           py={[2, 4]}
         />
@@ -85,7 +85,7 @@ function Artists() {
       {songDetails.id ? (
         <SongDetails song={songDetails} />
       ) : (
-        <SongsList songs={songsFromArtist} onClick={selectSong} />
+        <SongsList songs={songsFromArtist} handleSong={handleSong} />
       )}
     </AppLayout>
   );
