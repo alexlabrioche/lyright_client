@@ -1,5 +1,5 @@
 import {
-  REQUEST_SUCCESS_PSEUDO,
+  // REQUEST_SUCCESS_PSEUDO,
   REQUEST_SUCCESS_LOGIN,
   LOGOUT,
 } from '../actions/types';
@@ -16,11 +16,11 @@ export default function(state = initialState, { type, payload }) {
         isAuth: true,
         connected: payload.data,
       };
-    case REQUEST_SUCCESS_PSEUDO:
-      return {
-        ...state,
-        guest: { ...state.guest, pseudo: payload.data },
-      };
+    // case REQUEST_SUCCESS_PSEUDO:
+    //   return {
+    //     ...state,
+    //     guest: { ...state.guest, pseudo: payload.data },
+    //   };
     case LOGOUT:
       return {
         ...state,

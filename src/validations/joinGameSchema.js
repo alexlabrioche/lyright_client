@@ -6,10 +6,7 @@ const schema = yup.object().shape({
     .length(5, '5 charactères !!')
     .matches(/^[a-zA-Z0-9]*$/, 'Uniquement alpha Numérique')
     .required('Le champs est requis'),
-  pseudo: yup
-    .string()
-    .max(30, '30 lettres max')
-    .required('Le champs est requis'),
+  pseudo: yup.string().max(30, '30 lettres max'),
 });
 
 export default schema;

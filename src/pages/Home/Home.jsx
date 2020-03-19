@@ -1,13 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Heading, Button, Flex } from 'rebass';
 import Link from '../../components/shared/Link';
 
 import AppLayout from '../../layouts/AppLayout';
 
 function Home() {
-  const { isAuth, connected } = useSelector(({ user }) => user);
-
   return (
     <AppLayout title={'Accueil'}>
       <Flex

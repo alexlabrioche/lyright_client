@@ -21,10 +21,7 @@ export default function GameSettings({ game = { code: '' }, start }) {
         </Text>
       </Box>
       <Box my={3} height="100%">
-        <Heading>Joueurs connectés :</Heading>
-        {game.players.map(player => (
-          <Text>{player.name}</Text>
-        ))}
+        <Heading>{`Salut ${game.pseudo}`}</Heading>
       </Box>
       <Button my={3} onClick={start}>
         <Text>GO !</Text>

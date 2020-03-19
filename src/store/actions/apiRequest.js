@@ -47,6 +47,7 @@ export const apiRequest = (subType = '', options = axiosDefaultOptions) => {
     dispatch(requestStarted());
     axios[verb](`${baseUrl}/api${uri}`, { headers, ...data })
       .then(({ data }) => {
+        console.log('axios data', data);
         dispatch(dispatchRequestSuccess(data, subType));
       })
       .catch(err => {

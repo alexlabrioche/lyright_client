@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
@@ -56,32 +56,29 @@ function PrivateRoute({ children, ...rest }) {
 export default function AppRouter() {
   const [isMobile] = useMobile();
 
-  return isMobile ? (
-    <MobilePage />
-  ) : (
+  return (
     <AuthIsLoaded>
-      <BrowserRouter>
-        <Switch>
-          <Route path={ARTISTS_ROUTE}>
-            <ArtistsPage />
-          </Route>
-          <PrivateRoute path={IN_GAME_ROUTE}>
-            {!isMobile ? <InGamePage /> : <Redirect to={HOME_ROUTE} />}
-          </PrivateRoute>
-          <PrivateRoute path={SETUP_GAME_ROUTE}>
-            {!isMobile ? <GamePage /> : <Redirect to={HOME_ROUTE} />}
-          </PrivateRoute>
-          <PrivateRoute path={USER_SPACE_ROUTE}>
-            {!isMobile ? <UserSpacePage /> : <Redirect to={HOME_ROUTE} />}
-          </PrivateRoute>
-          <Route path={AUTH_ROUTE}>
-            <AuthPage />
-          </Route>
-          <Route path={HOME_ROUTE}>
-            <HomePage />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <Switch>
+        <Route path={ARTISTS_ROUTE}>
+          <ArtistsPage />
+        </Route>
+        <Route path={IN_GAME_ROUTE}>
+          {/* {!isMobile ? <InGamePage /> : <Redirect to={HOME_ROUTE} />} */}
+          <InGamePage isMobile={isMobile} />
+        </Route>
+        <PrivateRoute path={SETUP_GAME_ROUTE}>
+          {!isMobile ? <GamePage /> : <Redirect to={HOME_ROUTE} />}
+        </PrivateRoute>
+        <PrivateRoute path={USER_SPACE_ROUTE}>
+          {!isMobile ? <UserSpacePage /> : <Redirect to={HOME_ROUTE} />}
+        </PrivateRoute>
+        <Route path={AUTH_ROUTE}>
+          <AuthPage />
+        </Route>
+        <Route path={HOME_ROUTE}>
+          {isMobile ? <MobilePage /> : <HomePage />}
+        </Route>
+      </Switch>
     </AuthIsLoaded>
   );
 }

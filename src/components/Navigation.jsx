@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Heading, Flex, Button, Box, Image, Text } from 'rebass';
+import React from 'react';
+import { Heading, Flex, Button, Box, Text } from 'rebass';
 import { useSelector } from 'react-redux';
 import { isEmpty } from 'react-redux-firebase';
 
@@ -21,12 +21,6 @@ function Navigation() {
   const [isMobile] = useMobileDevice();
   const [hoverRef, isHovered] = useHover();
   const { auth, profile } = useSelector(({ firebase }) => firebase);
-  // const [profilePic, setProfilePic] = React.useState(null);
-  // console.log('auth', auth);
-  // console.log('profile', profile);
-  // useEffect(() => {
-  //   setProfilePic(auth.photoURL || null);
-  // }, []);
 
   return (
     <Flex variant="nav">
@@ -49,7 +43,7 @@ function Navigation() {
               <Text width="100%" textAlign="end" mr={3}>
                 {isHovered
                   ? 'Espace Personnel'
-                  : `Salut ${auth.displayName || profile.displayName} !`}
+                  : `${auth.displayName || profile.displayName}`}
               </Text>
             </Flex>
             {/* <Image src={profilePic} variant="avatar" /> */}

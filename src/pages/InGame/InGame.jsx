@@ -1,12 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import AppLayout from '../../layouts/AppLayout';
+import { Box } from 'rebass';
 
-export default function InGame() {
+import AppLayout from '../../layouts/AppLayout';
+import MobileLayout from '../../layouts/MobileLayout';
+
+export default function InGame({ isMobile }) {
   const game = useSelector(({ game }) => game);
+  const { socket } = useSelector(({ socket }) => socket);
+
   const history = useHistory();
   const params = useParams();
+  const Layout = isMobile ? MobileLayout : AppLayout;
 
   useMemo(() => {
     if (params.code !== game.code) {
@@ -14,5 +20,25 @@ export default function InGame() {
     }
   }, [game, params, history]);
 
-  return <AppLayout>InGame</AppLayout>;
+  useEffect(() => {
+    console.log('🍤 IO ON', socket);
+    socket.emit(
+      'USER_CONNECTED',
+      { name: game.pseudo, room: game.code },
+      () => {},
+    );
+    return () => {
+      socket.emit('disconnect');
+      socket.off();
+      console.log('🥣 IO OFF');
+    };
+  }, [socket, game]);
+
+  return (
+    <Layout>
+      <Box height="100%" bg="lightblue">
+        zer
+      </Box>
+    </Layout>
+  );
 }

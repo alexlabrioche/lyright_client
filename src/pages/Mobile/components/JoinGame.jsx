@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Button } from 'rebass';
+import { Box, Text, Button, Heading } from 'rebass';
 import { Label, Input } from '@rebass/forms';
 import { useForm } from 'react-hook-form';
 import joinGameSchema from '../../../validations/joinGameSchema';
@@ -14,25 +14,31 @@ export default function JoinGame({ onSubmit, pseudo, onClickPseudo }) {
       <Label htmlFor="pseudo" my={3}>
         <Text fontSize={2}>Pseudo :</Text>
       </Label>
-      <Input
-        my={2}
-        fontSize={3}
-        id="pseudo"
-        name="pseudo"
-        type="text"
-        placeholder="Ton Pseudo"
-        value={'' || pseudo}
-        ref={register}
-      />
-      <Text
-        my={2}
-        fontSize={2}
-        fontWeight="bold"
-        textAlign="center"
-        color="error"
-      >
-        {errors.pseudo && errors.pseudo.message}
-      </Text>
+      {!pseudo ? (
+        <>
+          <Input
+            my={2}
+            fontSize={3}
+            ref={register}
+            name="pseudo"
+            placeholder="Ton Pseudo"
+          />
+          <Text
+            my={2}
+            fontSize={2}
+            fontWeight="bold"
+            textAlign="center"
+            color="error"
+          >
+            {errors.pseudo && errors.pseudo.message}
+          </Text>
+        </>
+      ) : (
+        <Heading textAlign="center" my={3}>
+          {pseudo}
+        </Heading>
+      )}
+
       <Button variant="secondary" width="100%" onClick={onClickPseudo}>
         En manque d'inspiration ?
       </Button>
@@ -60,7 +66,7 @@ export default function JoinGame({ onSubmit, pseudo, onClickPseudo }) {
       <Input
         my={4}
         type="submit"
-        value="C'est parti frérot"
+        value="Rejoindre"
         sx={{
           borderColor: isErrorsEmpty ? 'accent' : 'error',
           borderWidth: 3,

@@ -1,38 +1,41 @@
 import {
-  ADD_ARTIST_ID,
   REQUEST_SUCCESS_NEW_GAME,
-  ADD_PLAYER,
+  REQUEST_SUCCESS_JOIN,
+  REQUEST_SUCCESS_PSEUDO,
 } from '../actions/types';
 
 const initialState = {
-  host: '',
+  host: null,
+  pseudo: '',
   code: '',
-  artists: [],
   score: {},
   round: 0,
   isInitialized: false,
-  players: [],
+  suggestedPseudo: null,
 };
 
 export default function(state = initialState, { type, payload }) {
   switch (type) {
     case REQUEST_SUCCESS_NEW_GAME:
-      const { code, userId } = payload.data;
       return {
         ...state,
-        code: code,
-        host: userId,
+        code: payload.data.code,
+        pseudo: payload.data.pseudo,
         isInitialized: true,
+        host: true,
       };
-    case ADD_ARTIST_ID:
-      state.artists.length <= 1 && state.artists.push({ artist: payload });
+    case REQUEST_SUCCESS_JOIN:
       return {
         ...state,
+        code: payload.data.code,
+        pseudo: payload.data.pseudo,
+        isInitialized: true,
+        host: false,
       };
-    case ADD_PLAYER:
-      state.players.push(payload);
+    case REQUEST_SUCCESS_PSEUDO:
       return {
         ...state,
+        suggestedPseudo: payload.data,
       };
     default:
       return state;
