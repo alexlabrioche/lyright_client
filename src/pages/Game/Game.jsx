@@ -14,6 +14,7 @@ function Game() {
   const history = useHistory();
   const { artistsList } = useSelector(({ artists }) => artists);
   const game = useSelector(({ game }) => game);
+
   function initNewGame() {
     dispatch(
       apiRequest(NEW_GAME, {

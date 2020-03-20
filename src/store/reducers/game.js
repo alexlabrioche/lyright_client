@@ -2,12 +2,14 @@ import {
   REQUEST_SUCCESS_NEW_GAME,
   REQUEST_SUCCESS_JOIN,
   REQUEST_SUCCESS_PSEUDO,
+  REQUEST_SUCCESS_LYRICS,
 } from '../actions/types';
 
 const initialState = {
   host: null,
   pseudo: '',
   code: '',
+  gameData: null,
   score: {},
   round: 0,
   isInitialized: false,
@@ -31,6 +33,11 @@ export default function(state = initialState, { type, payload }) {
         pseudo: payload.data.pseudo,
         isInitialized: true,
         host: false,
+      };
+    case REQUEST_SUCCESS_LYRICS:
+      return {
+        ...state,
+        gameData: payload.data,
       };
     case REQUEST_SUCCESS_PSEUDO:
       return {
