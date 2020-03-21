@@ -1,44 +1,105 @@
-import React from 'react';
-import { Button, Flex } from 'rebass';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import { apiRequest } from '../../store/actions/apiRequest';
 import { NEW_GAME } from '../../store/actions/types';
 
 import AppLayout from '../../layouts/AppLayout';
-import Settings from './components/GameSettings';
 import { initSocketIo } from '../../store/actions/socketio';
+
+import InitializeGameComponent from './components/InitializeGame';
+import DesktopGameComponent from './components/DesktopGame';
+
+const baseUrl = process.env.REACT_APP_SERVER_BASE_URL;
+
+const isObjectEmpty = obj => !Object.keys(obj).length;
+
+const getApiLyrics = async () => {
+  const { data } = await axios.get(`${baseUrl}/api/game/lyrics`);
+  return data;
+};
 
 function Game() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { artistsList } = useSelector(({ artists }) => artists);
   const game = useSelector(({ game }) => game);
+  const socket = useSelector(({ socket }) => socket.socket);
 
-  function initNewGame() {
+  const [messages, setMessages] = useState([]);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const [playersInRoom, setPlayersInRoom] = useState([]);
+  const [gameData, setGameData] = useState([]);
+
+  console.log('🔥 gameData', gameData);
+  console.log('🔥 playersInRoom', playersInRoom);
+
+  useEffect(() => {
+    dispatch(initSocketIo());
     dispatch(
       apiRequest(NEW_GAME, {
         verb: 'get',
         uri: '/game/new',
       }),
     );
+  }, []);
+
+  async function startNewRound() {
+    const { data } = await getApiLyrics();
+    if (data) {
+      setGameData(s => [...s, data]);
+      socket.emit('newRound', data, () => {});
+    }
   }
 
+  useEffect(() => {
+    if (!isObjectEmpty(socket)) {
+      if (game.code) {
+        console.log('🚗 join');
+        socket.emit(
+          'join',
+          { name: game.pseudo, room: game.code, isHost: true },
+          () => {},
+        );
+      }
+    }
+  }, [socket, game.code]);
+
+  useEffect(() => {
+    if (!isObjectEmpty(socket)) {
+      socket.on('message', newMessage => {
+        console.log('🚗 message');
+        setMessages([...messages, newMessage]);
+      });
+      socket.on('players', players => {
+        console.log('🚗 players');
+        setPlayersInRoom(players);
+      });
+    }
+  }, [socket, messages, playersInRoom]);
+
   function startGame() {
-    dispatch(initSocketIo());
-    history.push(`/jouer/${game.code}`);
+    setIsGameStarted(true);
+    startNewRound();
   }
 
   return (
     <AppLayout title="Jouer">
-      {!game.isInitialized ? (
-        <Flex justifyContent="center" alignItems="center">
-          <Button onClick={initNewGame} fontSize={4} p={3} fontWeight="medium">
-            Commencer une partie
-          </Button>
-        </Flex>
+      {game.isInitialized ? (
+        isGameStarted ? (
+          <DesktopGameComponent
+            players={playersInRoom}
+            gameData={gameData}
+            nextRound={startNewRound}
+          />
+        ) : (
+          <InitializeGameComponent
+            messages={messages}
+            startGame={startGame}
+            game={game}
+          />
+        )
       ) : (
-        <Settings game={game} artists={artistsList} start={startGame} />
+        'Chargement...'
       )}
     </AppLayout>
   );

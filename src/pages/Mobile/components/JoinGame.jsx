@@ -38,10 +38,10 @@ export default function JoinGame({ onSubmit, pseudo, onClickPseudo }) {
           {pseudo}
         </Heading>
       )}
+      <Box textAlign="end">
+        <Button onClick={onClickPseudo}>En manque d'inspiration ?</Button>
+      </Box>
 
-      <Button variant="secondary" width="100%" onClick={onClickPseudo}>
-        En manque d'inspiration ?
-      </Button>
       <Label htmlFor="code" my={3}>
         <Text fontSize={2}>Code :</Text>
       </Label>
@@ -70,7 +70,7 @@ export default function JoinGame({ onSubmit, pseudo, onClickPseudo }) {
         sx={{
           borderColor: isErrorsEmpty ? 'accent' : 'error',
           borderWidth: 3,
-          fontSize: 3,
+          fontSize: 5,
         }}
       />
     </Box>

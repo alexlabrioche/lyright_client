@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Heading, Text, Button, Flex } from 'rebass';
 
-export default function GuessTheLyrics({ artists, sendResponse }) {
+export default function GuessWhoSang({ artists, sendResponse }) {
   return (
     <Flex
       my={5}

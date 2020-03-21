@@ -14,7 +14,6 @@ export default function Mobile() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  console.log('game', game);
 
   useEffect(() => {
     if (location.pathname !== '/') {
@@ -24,8 +23,8 @@ export default function Mobile() {
 
   function onSubmitJoinGame(data) {
     const body = game.suggestedPseudo
-      ? { ...data, pseudo: game.suggestedPseudo }
-      : data;
+      ? { ...data, pseudo: game.suggestedPseudo, enhanceName: false }
+      : { ...data, enhanceName: data.pseudo ? true : false };
     dispatch(
       apiRequest(JOIN, {
         verb: 'post',
@@ -62,8 +61,7 @@ export default function Mobile() {
               my: 5,
             }}
           >
-            Rejoindre <br />
-            une partie
+            Lyright
           </Heading>
           <JoinGame
             onSubmit={onSubmitJoinGame}
@@ -78,9 +76,12 @@ export default function Mobile() {
           alignItems="center"
           flexDirection="column"
         >
-          <Heading my={5}>{`Bienvenue ${game.pseudo}`}</Heading>
-          <Button my={5} onClick={startGame}>
-            Go !
+          <Heading my={3}>Coucou</Heading>
+          <Heading my={2} fontSize={4}>
+            {game.pseudo}
+          </Heading>
+          <Button mt={7} onClick={startGame}>
+            Rejoindre
           </Button>
         </Flex>
       )}

@@ -9,7 +9,7 @@ import HomePage from '../pages/Home';
 import ArtistsPage from '../pages/Artists';
 import GamePage from '../pages/Game';
 import MobilePage from '../pages/Mobile';
-import InGamePage from '../pages/InGame';
+import InGameMobilePage from '../pages/Mobile/InGame';
 import AuthPage from '../pages/Auth';
 import UserSpacePage from '../pages/UserSpace';
 import SplashScreen from '../layouts/SplashScreen';
@@ -63,8 +63,7 @@ export default function AppRouter() {
           <ArtistsPage />
         </Route>
         <Route path={IN_GAME_ROUTE}>
-          {/* {!isMobile ? <InGamePage /> : <Redirect to={HOME_ROUTE} />} */}
-          <InGamePage isMobile={isMobile} />
+          {isMobile ? <InGameMobilePage /> : <Redirect to={HOME_ROUTE} />}
         </Route>
         <PrivateRoute path={SETUP_GAME_ROUTE}>
           {!isMobile ? <GamePage /> : <Redirect to={HOME_ROUTE} />}
